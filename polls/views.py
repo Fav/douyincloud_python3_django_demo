@@ -22,7 +22,7 @@ def antidirt(request):
     event_name = json_result["event"]
     if event_name == "verify_webhook":
         return_json = json_result["content"]
-        return JsonResponse({"code":0,"data":return_json,"msg":""})
+        return JsonResponse(return_json)
     else:
         return JsonResponse(json_result)
 
