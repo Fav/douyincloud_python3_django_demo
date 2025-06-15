@@ -15,10 +15,16 @@ logger = logging.getLogger('polls')
 def antidirt(request):
     concat = request.POST
     postBody = request.body
-    # 获取响应内容
     json_result = json.loads(postBody)
-    return JsonResponse(json_result)
+    if "event" not in json_result:
+        return JsonResponse({"code":1,"msg":"no event name"})
 
+    event_name = json_result["event"]
+    if event_name == "verify_webhook":
+        return_json = json_result["content"]
+        return JsonResponse({"code":0,"data":return_json,"msg":""})
+    else:
+        return JsonResponse(json_result)
 
 @csrf_exempt
 def openid(request):
